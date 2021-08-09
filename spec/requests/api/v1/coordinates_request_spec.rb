@@ -15,6 +15,17 @@ RSpec.describe 'forecast request api test', type: :request do
                  }).
                to_return(status: 200, body: denver_co, headers: {})
 
+      denver_weather = File.read('spec/fixtures/open_weather/denver_weather.json')
+
+      stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall?appid=#{ENV['weather_key']}&exclude=minutely,alerts&lat=39.738453&lon=-104.984853").
+        with(
+          headers: {
+         'Accept'=>'*/*',
+         'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+         'User-Agent'=>'Faraday v1.6.0'
+          }).
+        to_return(status: 200, body: denver_weather, headers: {})
+
       get '/api/v1/forecast?location=Denver,CO'
 
       expect(response).to be_successful

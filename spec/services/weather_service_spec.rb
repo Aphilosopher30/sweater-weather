@@ -7,7 +7,7 @@ RSpec.describe WeatherService do
 
       denver_weather = File.read('spec/fixtures/open_weather/denver_weather.json')
 
-      stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall?appid=3a8fc712d768c4590d989924f75271e0&exclude=minutely,alerts&lat=39.738453&lon=-104.984853").
+      stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall?appid=#{ENV['weather_key']}&exclude=minutely,alerts&lat=39.738453&lon=-104.984853").
         with(
           headers: {
          'Accept'=>'*/*',
