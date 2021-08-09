@@ -3,9 +3,9 @@ class Api::V1::BreweriesController < ApplicationController
     location = MapFacade.get_coordinates(params[:location])
     forecast = WeatherFacade.weather_data(location)
 
-    breweries = BreweriesFacade.location_listing(params[:location], params[:quantity])
+    breweries = BreweriesFacade.local_listing(params[:location], params[:quantity].to_i)
 
-    # render json: BrewerySerializer.new(forecast)
+    render json: BrewerySerializer.new(breweries)
 
   end
 end
