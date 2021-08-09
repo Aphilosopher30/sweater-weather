@@ -1,32 +1,23 @@
 require 'rails_helper'
 
-RSpec.describe BreweriesFacade do
+RSpec.describe MapFacade do
 
-  context ' location_listings' do
-    it 'gives a list of Brewery objects' do
+  context 'generating city list' do
+    it 'gets coordinates' do
+      denver_co = File.read('spec/fixtures/mapquest/denver_co.json')
 
-      test = BreweriesFacade.local_listing("Denver,CO")
+      stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address?key=#{ENV['map_quest_key']}&location=Denver,CO").
+               with(
+                 headers: {
+             	  'Accept'=>'*/*',
+             	  'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+             	  'User-Agent'=>'Faraday v1.6.0'
+                 }).
+               to_return(status: 200, body: denver_co, headers: {})
 
-      expect(test).to be_a(Array)
-      expect(test.first.class).to eq(Brewery)
-      expect(test.last.class).to eq(Brewery)
-    end
+      test = MapFacade.get_coordinates("Denver,CO")
 
-    describe 'list length ' do
-      it 'defaults to 100' do
-        test = BreweriesFacade.local_listing("Denver,CO")
-
-        expect(test).to be_a(Array)
-        expect(test.length).to eq(100)
-      end
-      it 'gives back the specified length if provided' do
-
-        test = BreweriesFacade.local_listing("Denver,CO")
-
-        expect(test).to be_a(Array)
-        expect(test.length).to eq(100)
-
-      end
+      expect(test).to eq({:lat=>39.738453, :lng=>-104.984853})
     end
   end
 end
