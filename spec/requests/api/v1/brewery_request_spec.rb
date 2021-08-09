@@ -4,8 +4,28 @@ RSpec.describe 'forecast request api test', type: :request do
 
   describe "returns infomation" do
     it "returns information" do
+      denver_co = File.read('spec/fixtures/mapquest/denver_co.json')
 
-      
+      stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address?key=#{ENV['map_quest_key']}&location=denver,co").
+               with(
+                 headers: {
+                'Accept'=>'*/*',
+                'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+                'User-Agent'=>'Faraday v1.6.0'
+                 }).
+               to_return(status: 200, body: denver_co, headers: {})
+
+      denver_weather = File.read('spec/fixtures/open_weather/denver_weather.json')
+
+      stub_request(:get, "https://api.openweathermap.org/data/2.5/onecall?appid=#{ENV['weather_key']}&exclude=minutely,alerts&lat=39.738453&lon=-104.984853").
+        with(
+          headers: {
+         'Accept'=>'*/*',
+         'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+         'User-Agent'=>'Faraday v1.6.0'
+          }).
+        to_return(status: 200, body: denver_weather, headers: {})
+
 
       get '/api/v1/breweries?location=denver,co&quantity=5'
 
