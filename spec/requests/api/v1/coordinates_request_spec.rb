@@ -17,11 +17,11 @@ RSpec.describe 'forecast request api test', type: :request do
 
       get '/api/v1/forecast?location=Denver,CO'
 
-      # expect(response).to be_successful
+      expect(response).to be_successful
       # expect(response.status).to eq(200)
       # expect(response.content_type).to eq("application/json")
 
-      weather_data = JSON.parse(response.body, symbolize_names: true)
+      # weather_data = JSON.parse(response.body, symbolize_names: true)
 
       # expect(weather_data[:data][:id]).to eq(nil)
       # expect(weather_data[:data][:type]).to eq("forecast")
