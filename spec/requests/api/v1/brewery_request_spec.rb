@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'forecast request api test', type: :request do
+RSpec.describe 'brewery request api test', type: :request do
 
   describe "returns infomation" do
     it "returns information" do
