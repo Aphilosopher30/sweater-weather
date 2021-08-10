@@ -17,6 +17,4 @@ class Api::V1::UsersController < ApplicationController
       render json: UserSerializer.new(user_with_api_key)
     end
   end
-
-
 end
