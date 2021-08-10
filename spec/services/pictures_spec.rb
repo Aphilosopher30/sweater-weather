@@ -8,7 +8,7 @@ RSpec.describe PicturesService do
       picture_api = File.read('spec/fixtures/unsplash/denver_co.json')
 
 
-      stub_request(:get, "https://api.unsplash.com/search/photos?client_id=-MKYh8bJYN9doJagJg6C9lrBleC3e0RFC3F9BECy8e8&query=denver,co").
+      stub_request(:get, "https://api.unsplash.com/search/photos?client_id=#{ENV['photo_key']}&query=denver,co").
         with(
           headers: {
          'Accept'=>'*/*',
