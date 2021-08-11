@@ -88,14 +88,6 @@ RSpec.describe 'forecast request api test', type: :request do
 
       bad_request = File.read('spec/fixtures/mapquest/bad_request.json')
 
-      stub_request(:get, "http://www.mapquestapi.com/geocoding/v1/address?key=zGzfu4UzI8vL45i0cpfsLigueRzfEBW0&location").
-        with(
-          headers: {
-         'Accept'=>'*/*',
-         'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
-         'User-Agent'=>'Faraday v1.6.0'
-          }).
-        to_return(status: 200, body: bad_request, headers: {})
 
       # get '/api/v1/forecast'
 
