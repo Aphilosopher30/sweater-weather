@@ -29,4 +29,26 @@ RSpec.describe MapService do
     end
   end
 
+  describe "returns trip" do
+    it "gives info on trip" do
+
+      test = File.read('spec/fixtures/mapquest/denver_to_pueblo.json')
+
+      stub_request(:get, "http://www.mapquestapi.com/directions/v2/route?from=Denver,CO&key=#{ENV['map_quest_key']}&to=Pueblo,CO").
+        with(
+          headers: {
+         'Accept'=>'*/*',
+         'Accept-Encoding'=>'gzip;q=1.0,deflate;q=0.6,identity;q=0.3',
+         'User-Agent'=>'Faraday v1.6.0'
+          }).
+        to_return(status: 200, body: test, headers: {})
+
+        trip = MapService.directions('Denver,CO', 'Pueblo,CO')
+        expected = JSON.parse(test, symbolize_names: true)
+
+        expect(trip).to eq(expected)
+    end
+  end
+
+
 end

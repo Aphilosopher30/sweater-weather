@@ -16,4 +16,12 @@ class MapService
     end
     parse_json(response)
   end
+
+  def self.directions(start, destination)
+    response = connection.get('/directions/v2/route') do |faraday|
+      faraday.params[:from] = start
+      faraday.params[:to] = destination
+    end
+    parse_json(response)
+  end
 end
